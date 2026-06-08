@@ -114,6 +114,13 @@ export default function App() {
               ← Back to all states
             </button>
           )}
+          <button onClick={() => setViewMode(viewMode === 'admin' ? 'home' : 'admin')}
+            className={`border rounded-lg px-3 md:px-4 py-1.5 md:py-2 text-xs md:text-sm cursor-pointer transition
+              ${viewMode === 'admin'
+                ? 'bg-[#2f6df6] border-[#2f6df6] text-white'
+                : 'bg-white/5 border-white/20 text-white/60 hover:text-white hover:bg-white/10'}`}>
+            ✍ Admin
+          </button>
         </div>
       </header >
 
