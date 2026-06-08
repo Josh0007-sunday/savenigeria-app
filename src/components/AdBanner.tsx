@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { apiUrl } from '../lib/api'
 
 interface Ad {
   id: number
@@ -16,7 +17,7 @@ export default function AdBanner({ className = '', heightClass = 'h-[120px]' }: 
   const [ads, setAds] = useState<Ad[]>([])
 
   useEffect(() => {
-    fetch('/api/ads')
+    fetch(apiUrl('/api/ads'))
       .then(r => r.json())
       .then(setAds)
       .catch(() => {})

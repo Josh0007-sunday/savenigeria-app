@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react'
+import { apiUrl } from './lib/api'
 import Map from './components/Map'
 import StatsBar from './components/StatsBar'
 import NewsPanel from './components/NewsPanel'
@@ -37,9 +38,8 @@ export default function App() {
   const [activeLocalArticle, setActiveLocalArticle] = useState<any | null>(null)
 
   useEffect(() => {
-    fetch('/api/levels').then(r => r.json()).then(setLevels)
-    // Load national counts from states
-    fetch('/api/states').then(r => r.json()).then(geo => {
+    fetch(apiUrl('/api/levels')).then(r => r.json()).then(setLevels)
+    fetch(apiUrl('/api/states')).then(r => r.json()).then(geo => {
       const c: Counts = { 0: 0, 1: 0, 2: 0, 3: 0, total: 0 }
       geo.features.forEach((f: any) => {
         const fc = f.properties.counts
@@ -53,7 +53,7 @@ export default function App() {
   function handleStateClick(stateName: string) {
     setActiveState(stateName)
     setSelectedLga(null)
-    fetch('/api/lgas/' + encodeURIComponent(stateName))
+    fetch(apiUrl('/api/lgas/' + encodeURIComponent(stateName)))
       .then(r => r.json())
       .then(geo => {
         const c: Counts = { 0: 0, 1: 0, 2: 0, 3: 0, total: 0 }
@@ -75,7 +75,7 @@ export default function App() {
     setViewTitle('Nigeria · All States')
     setViewHint('Click a state to view its Local Government Areas.')
     setStatsTitle('National breakdown (774 LGAs)')
-    fetch('/api/states').then(r => r.json()).then(geo => {
+    fetch(apiUrl('/api/states')).then(r => r.json()).then(geo => {
       const c: Counts = { 0: 0, 1: 0, 2: 0, 3: 0, total: 0 }
       geo.features.forEach((f: any) => {
         const fc = f.properties.counts

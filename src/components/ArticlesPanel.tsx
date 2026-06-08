@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { apiUrl } from '../lib/api'
 
 const THREAT = [
   { v: 0, label: 'Safe', color: '#22c55e', bg: 'rgba(34,197,94,0.1)', border: 'rgba(34,197,94,0.3)' },
@@ -29,7 +30,7 @@ interface Props {
 export default function ArticlesPanel({ onArticleClick }: Props) {
   const [articles, setArticles] = useState<Article[]>([])
   const load = () =>
-    fetch('/api/articles').then(r => r.json()).then(setArticles).catch(() => { })
+    fetch(apiUrl('/api/articles')).then(r => r.json()).then(setArticles).catch(() => { })
 
   useEffect(() => { load() }, [])
 

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { apiUrl } from '../lib/api'
 
 interface Article {
   title: string
@@ -20,7 +21,7 @@ export default function NewsPanel({ onArticleClick, onSeeMore }: Props) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('/api/news')
+    fetch(apiUrl('/api/news'))
       .then(r => r.json())
       .then(data => { setArticles(data.articles || []) })
       .catch(() => setArticles([]))

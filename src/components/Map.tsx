@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { apiUrl } from '../lib/api'
 import L from 'leaflet'
 
 const NG_CENTER: [number, number] = [9.082, 8.6753]
@@ -53,7 +54,7 @@ export default function Map({ onStateClick, onLgaClick, activeState }: Props) {
   }
 
   async function loadStates(map: L.Map) {
-    const res = await fetch('/api/states')
+    const res = await fetch(apiUrl('/api/states'))
     const geo = await res.json()
     if (!geo.features) return
 
@@ -80,7 +81,7 @@ export default function Map({ onStateClick, onLgaClick, activeState }: Props) {
   async function openState(stateName: string) {
     const map = mapRef.current
     if (!map || !stateName) return
-    const res = await fetch('/api/lgas/' + encodeURIComponent(stateName))
+    const res = await fetch(apiUrl('/api/lgas/' + encodeURIComponent(stateName)))
     const geo = await res.json()
 
     if (statesLayerRef.current) map.removeLayer(statesLayerRef.current)

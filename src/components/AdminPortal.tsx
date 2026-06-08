@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { apiUrl } from '../lib/api'
 
 type Tab = 'login' | 'register' | 'articles' | 'news' | 'ads'
 type PostTab = 'articles' | 'news' | 'ads'
@@ -35,7 +36,7 @@ export default function AdminPortal() {
     const setAdF = (k: keyof typeof adFields, v: string) => setAdFields(p => ({ ...p, [k]: v }))
 
     useEffect(() => {
-        fetch('/api/locations').then(r => r.json()).then(setLocations).catch(() => {})
+        fetch(apiUrl('/api/locations')).then(r => r.json()).then(setLocations).catch(() => {})
     }, [])
 
     useEffect(() => {
@@ -48,7 +49,7 @@ export default function AdminPortal() {
     const reset = () => { setError(''); setStatus('') }
 
     const post = async (url: string, body: object, token?: string) => {
-        const r = await fetch(url, {
+        const r = await fetch(apiUrl(url), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
             body: JSON.stringify(body),
